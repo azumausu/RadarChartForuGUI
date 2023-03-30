@@ -1,4 +1,4 @@
-Radar chart with outline running on uGUI
+Radar chart with outline running on uGUI.  
 It can be used not only as a radar chart but also as a simple polygon drawing.
 
 Radar chart Sample
