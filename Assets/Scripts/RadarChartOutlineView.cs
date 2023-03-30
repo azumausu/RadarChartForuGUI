@@ -38,8 +38,10 @@ namespace Graph
             // 中心をSkipした頂点を作成しなおす。
             var cornerVertices = ListPool<Vector2>.Get();
             var lineList = ListPool<Line>.Get();
-            var allVertices = ListPool<Vector2>.Get();
-            allVertices.AddRange(vertices);
+            
+            // Debug用
+            // var allVertices = ListPool<Vector2>.Get();
+            // allVertices.AddRange(vertices);
 
 
             cornerVertices.AddRange(vertices.Skip(1).Select(x => new Vector2(x.x, x.y)));
@@ -92,7 +94,7 @@ namespace Graph
                     var pos = new Vector2(cornerVertices[i].x, cornerVertices[i].y);
                     var uv = new Vector2(cornerVertices[i].x / rect.width, cornerVertices[i].y / rect.height);
                     verts.AddVert(pos, color32, uv);
-                    allVertices.Add(pos);
+                    // allVertices.Add(pos);
                 }
                 
                 // 押出したOutlineの頂点を追加
@@ -108,7 +110,7 @@ namespace Graph
                             .CalculateIntersectionPoint(lineList[i2].OuterTranslate()),
                     };
                     verts.AddVert(new Vector3(point.x, point.y, 0), color32, new Vector2(point.x / rect.width, point.y / rect.height));
-                    allVertices.Add(point);
+                    // allVertices.Add(point);
                 }
             }
             else
@@ -120,7 +122,7 @@ namespace Graph
                     var i2 = (i + 1) % lineList.Count;
                     var point = lineList[i1].InnerTranslate().CalculateIntersectionPoint(lineList[i2].InnerTranslate());
                     verts.AddVert(new Vector3(point.x, point.y, 0), color32, new Vector2(point.x / rect.width, point.y / rect.height));
-                    allVertices.Add(point);
+                    // allVertices.Add(point);
                 } 
                 
                 // Inlineの頂点追加
@@ -130,7 +132,7 @@ namespace Graph
                     var i2 = (i + 1) % lineList.Count;
                     var point = lineList[i1].OuterTranslate().CalculateIntersectionPoint(lineList[i2].OuterTranslate());
                     verts.AddVert(new Vector3(point.x, point.y, 0), color32, new Vector2(point.x / rect.width, point.y / rect.height));
-                    allVertices.Add(point);
+                    // allVertices.Add(point);
                 } 
             }
 
@@ -146,9 +148,9 @@ namespace Graph
                 verts.AddTriangle(outlineNextIndex, inlineIndex, inlineNextIndex);
             }
 
-            foreach (var vert in allVertices) verts.ToFillSquarePoint(vert, 20.0f);
+            // foreach (var vert in allVertices) verts.ToFillSquarePoint(vert, 20.0f);
             
-            ListPool<Vector2>.Release(allVertices);
+            // ListPool<Vector2>.Release(allVertices);
             ListPool<Vector2>.Release(cornerVertices);
             ListPool<Line>.Release(lineList);
         }
